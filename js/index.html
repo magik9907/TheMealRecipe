@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+    <header>
+        <title>The meal recipe</title>
+        <meta name="description" content="search meal recipe to cook." />
+        <meta name="keywords" content="meal,recipe," />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="style/index.css" />
+    </header>
+    <body>
+        <header class="page-header">
+            <h2 class="page-title"><a href="index.html">The meal recipe</a></h2>
+        </header>
+        <main>
+            <div class="mealSearchForm">
+                <form
+                    action="pages/meal.html"
+                    id="mealForm"
+                    class="js--mealForm"
+                    novalidate
+                >
+                    <div class="whatSearchSelector js--chkboxDiv">
+                        <p>Search by:</p>
+                        <br />
+                        <label for="whatSearchRadioName">Name</label
+                        ><input
+                            type="radio"
+                            id="whatSearchRadioName"
+                            value="name"
+                            name="searchByRadio"
+                            class="js--whatSearchRadio"
+                        />
+                        <label for="whatSearchRadioLetter">First letter</label
+                        ><input
+                            type="radio"
+                            value="letter"
+                            id="whatSearchRadioLetter"
+                            name="searchByRadio"
+                            class="js--whatSearchRadio"
+                        />
+                        <label for="whatSearchRadioCat">Categories</label
+                        ><input
+                            type="radio"
+                            id="whatSearchRadioCat"
+                            value="categories"
+                            name="searchByRadio"
+                            class="js--whatSearchRadio"
+                        />
+                        <label for="whatSearchRadioArea">Area</label
+                        ><input
+                            type="radio"
+                            value="area"
+                            id="whatSearchRadioArea"
+                            name="searchByRadio"
+                            class="js--whatSearchRadio"
+                        />
+                        <label for="whatSearchRadioIngredients"
+                            >Ingredients</label
+                        ><input
+                            type="radio"
+                            id="whatSearchRadioIngredients"
+                            value="ingredients"
+                            name="searchByRadio"
+                            class="js--whatSearchRadio"
+                        />
+                    </div>
+                    <div>
+                        <div class="js--fieldToChange">
+                            
+                        </div>
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="js--searchResult  mealRecipe"></div>
+
+            <div class="js--randomMeal grid mealGroupView"></div>
+        </main>
+        <script src="js/notificationHelper.js"></script>
+        <script src="js/rendererManager.js"></script>
+        <script src="js/TaskForm.js"></script>
+        <script src="js/taskManager.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
