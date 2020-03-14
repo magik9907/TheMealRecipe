@@ -48,3 +48,12 @@ body{
 .display-none{
     display: none;
 }
+
+a{
+    display: block;
+}
+
+img{
+    width:200px;
+    height: auto;
+}

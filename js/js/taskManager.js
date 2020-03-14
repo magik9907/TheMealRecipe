@@ -8,11 +8,9 @@ taskManager = (function () {
     };
 
     const notifyHelper = function (action, data = null) {
-        do{
             for (let i = 0, l = helpers.length; i < l; i++) {
                 helpers[i].update(action, data);
             }
-        }while(false);
     };
 
     const setLayoutByValue = function (data) {
@@ -29,7 +27,7 @@ taskManager = (function () {
                 notifyHelper("createFormLayout", data);
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
 
     };
@@ -54,8 +52,9 @@ taskManager = (function () {
     };
 
     const onFormSubmit = function (data){
+        console.log(data);
+        
         // value - how search ex by name
-        //destination - -where put result
         //searchingType = value to search
         data.target = 'generateSearchResult';
         try {
@@ -68,7 +67,7 @@ taskManager = (function () {
                 notifyHelper(data.target,data);
             });
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
 
     };
@@ -79,7 +78,7 @@ taskManager = (function () {
             flMealsName: 'search.php?f=',
             categorieMealsName: 'filter.php?c=',
             areaMealsName: 'filter.php?a=',
-            ingredientsMealsName: 'filter.php?i='
+            ingredientMealsName: 'filter.php?i='
         };
 
         return queryList[key];
@@ -90,11 +89,8 @@ taskManager = (function () {
         fetch('https://www.themealdb.com/api/json/v1/'+key+'/'+query + mainData['value'])
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
             JSONListCopy[mainData.value] = data;
             mainData.json = data;
-            //console.log(mainData);
-            
             callback(mainData);
         })
         .catch((error) => {

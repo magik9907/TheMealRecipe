@@ -13,7 +13,6 @@ class TaskForm {
             function (e) {
                 e.preventDefault();
                 var formData = self.getFormData($form);
-                formData.destination = '.js--searchResult';
                 funcList.onSubmit(formData);
             }, true);
 
