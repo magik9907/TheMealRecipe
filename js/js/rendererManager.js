@@ -1,19 +1,61 @@
 var rendererManager = (function () {
   'use strict';
   const update = (task, data) => {
-    console.log(data);
     switch (task) {
+      case 'createRecipe': createRecipe(data);break;
       case 'createFormLayout': setFormInput(data); break;
       case 'generateSearchResult': generateSearchResult(data); break;
     }
   };
 
+  const createRecipe = function(data){
+    var templBody = document.querySelector("#js--mealRecipeTempl").content;
+    var templList = document.querySelector("#js--ingredientsListTempl").content;
+    const meal = data.json.meals[0];
+    var htmlList = null;
+    var dfElement, dfList = new DocumentFragment();
+    var regexIngredient = /strIngredient\d+/;
+    let tag;
+    for(let x in meal){
+      
+      if(meal[x] ){
+        if( regexIngredient.test(x)){
+          console.log(meal);
+          dfElement = templList.cloneNode(true);
+          dfElement.querySelector("[data-"+x.replace(/\d+/,"")+"]").textContent = meal[x];
+          x = x.replace("Ingredient","Measure");
+          dfElement.querySelector("[data-"+x.replace(/\d+/,"")+"]").textContent = meal[x];
+          
+          dfList.appendChild(dfElement);
+        } else if (tag=templBody.querySelector("[data-"+x.replace(/\d+/,"")+"]")){
+          switch(x){
+            case 'idMeal' : 
+              tag.setAttribute("data-"+x,meal[x]);
+              break;
+            case 'strMealThumb':
+              tag.setAttribute("src",meal[x]);  
+              break;
+            case "strYoutube":
+              break;
+              // TODO: create youtube video load system
+              tag.setAttribute("src",meal[x])
+              break;
+            default:tag.textContent = meal[x];
+          }
+        }
+      }
+    };
+    
+    console.log( dfList);
+    templBody.querySelector("[data-ingredientsList]").appendChild(dfList);
+    document.querySelector(".js--mealRecipe").appendChild(templBody);
+  }
   const generateSearchResult = (data) => {
     let $resultDiv = document.querySelector('.js--searchResult');
     var mealsGrid = '';
 
     data.json.meals.forEach((element, index) => {
-      mealsGrid += `<a class="flex" href="${index+'/'+element.idMeal}">`;
+      mealsGrid += `<a class="" href="${element.idMeal}">`;
       if(element.strMealThumb)
         mealsGrid+=`<img src="${element.strMealThumb}" />`;
       mealsGrid += `<h5>${element.strMeal}</h5>`;

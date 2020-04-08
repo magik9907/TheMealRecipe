@@ -31,6 +31,14 @@ taskManager = (function () {
         }
 
     };
+    
+    const generateRecipe = function (data){
+        let query = getQuery('idMeal');
+        
+        getData(query, data,function(data){
+            notifyHelper("createRecipe", data);
+        });
+    };
 
     const getSelectOption = (data) =>{
         let query = null;
@@ -52,17 +60,13 @@ taskManager = (function () {
     };
 
     const onFormSubmit = function (data){
-        console.log(data);
-        
-        // value - how search ex by name
+       // value - how search ex by name
         //searchingType = value to search
         data.target = 'generateSearchResult';
         try {
             if (!data)
                 throw "Bad data to generate searching form";
-            let query = getQuery(data.searchingType);
-            // console.log(query, data);
-            
+            let query = getQuery(data.searchingType);     
             getData(query, data, function(data){
                 notifyHelper(data.target,data);
             });
@@ -74,6 +78,7 @@ taskManager = (function () {
 
     const getQuery = ( key ) => {
         let queryList = {
+            idMeal:'lookup.php?i=',
             mealName: 'search.php?s=',
             flMealsName: 'search.php?f=',
             categorieMealsName: 'filter.php?c=',
@@ -104,5 +109,6 @@ taskManager = (function () {
         addHelper: addHelper,
         setLayoutByValue: setLayoutByValue,
         onFormSubmit: onFormSubmit,
+        generateRecipe:generateRecipe,
     };
 })();

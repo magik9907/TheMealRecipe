@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-    <header>
+    <head>
         <title>The meal recipe</title>
         <meta name="description" content="search meal recipe to cook." />
         <meta name="keywords" content="meal,recipe," />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <meta charset="utf-8" />
         <link rel="stylesheet" href="style/index.css" />
-    </header>
+    </head>
     <body>
-        <header class="page-header">
-            <h2 class="page-title"><a href="index.html">The meal recipe</a></h2>
+        <header class="">
+            <h2 class=""><a href="index.html">The meal recipe</a></h2>
         </header>
         <main>
-            <section class="mealSearchForm">
+            <section class="">
                 <form
                     action="pages/meal.html"
                     id="mealForm"
@@ -77,6 +78,25 @@
             <section class="js--searchResult  "></section>
 
             <section class="js--randomMeal"></section>
+        
+            <template id="js--mealRecipeTempl">
+                <div data-idMeal="">
+                    <h2 data-strMeal=""></h2>
+                    <img src="" data-strMealThumb="" alt="">
+                    
+                    <!-- TODO: Youtube video js script -->
+                    <!-- <iframe width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-strYoutube=""></iframe> -->
+                    <ul data-ingredientsList>
+
+                    </ul>
+                    
+                    <p data-strInstructions></p>
+
+                </div>
+            </template>
+            <template id="js--ingredientsListTempl">
+                <li><span data-strMeasure></span> <span data-strIngredient></span></li>
+            </template>
         </main>
         <script src="js/notificationHelper.js"></script>
         <script src="js/rendererManager.js"></script>
