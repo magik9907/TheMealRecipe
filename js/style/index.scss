@@ -141,6 +141,10 @@ button {
     }
 }
 
+.selected{
+    border-color:$red !important;
+}
+
 .input-row {
     height: 40px;
     overflow: hidden;
@@ -241,6 +245,10 @@ label {
         padding-left: 45px;
         position: relative;
         transition: all 1s ease-in-out;
+
+        &.close{
+            max-height: 0px;
+        }
 
         .arrow {
             padding: 4px;

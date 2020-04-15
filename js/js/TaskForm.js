@@ -64,11 +64,13 @@ class TaskForm {
     }
 
     getFormData($form) {
-        
-        var $input;
-        if (!($input = $form.querySelector(".js--searchMeal:checked")))
-            $input = $form.querySelector(".js--searchMeal");
 
+        var $input;
+        if (!($input = $form.querySelector(".selected")))
+            $input = $form.querySelector(".js--searchMeal");
+        else {
+            $input = $input.querySelector("input");
+        }
         return {
             searchingType: $input.name,
             value: $input.value

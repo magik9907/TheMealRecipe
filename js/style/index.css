@@ -124,6 +124,10 @@ button:focus {
   outline: none;
 }
 
+.selected {
+  border-color: #fa2828 !important;
+}
+
 .input-row {
   height: 40px;
   overflow: hidden;
@@ -214,6 +218,9 @@ label {
   padding-left: 45px;
   position: relative;
   transition: all 1s ease-in-out;
+}
+.search-section .select-bar.close {
+  max-height: 0px;
 }
 .search-section .select-bar .arrow {
   padding: 4px;

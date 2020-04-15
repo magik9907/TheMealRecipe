@@ -15,6 +15,25 @@
     <script>
 
         "use strict";
+        const selectOption = (event) => {
+            let selector = event.target;
+            let inputRow;
+            while (!(selector.classList.contains("js--searching-option"))) {
+                if (selector.classList.contains("input-row")) {
+                    inputRow = selector;
+                }
+                if (selector == window) break;
+                selector = selector.parentElement;
+            }
+            let checked = selector.querySelector(".selected");
+            if (selector != window && checked)
+                checked.classList.remove("selected");
+            if (inputRow)
+                inputRow.classList.add("selected");
+
+
+        }
+
         const openerArrow = function (e) {
             let selectBar = e;
             while (!(selectBar.classList.contains("js--select-bar"))) {
@@ -25,21 +44,22 @@
 
         const searchOption = function (e) {
             const inputValue = e.value;
-            const options = document.querySelectorAll(".js--searchMealOption");
             let optionDiv = document.querySelector(".js--select-bar-option");
-
-            let regexp = new RegExp(inputValue +"", "gi");
             let ifFind = false;
-            options.forEach(x => {
-                if (x.querySelector('[type="radio"]').value.match(regexp) ) {
-                    x.classList.remove("display-none");
-                    if (!(optionDiv.classList.contains("open"))) {
-                        optionDiv.classList.add("open");
-                    }
-                    ifFind = true;
-                } else if (!(x.classList.contains("display-none")))
-                    x.classList.add("display-none");
-            });
+            if (inputValue != "") {
+                const options = document.querySelectorAll(".js--searchMealOption");
+                let regexp = new RegExp(inputValue + "", "gi");
+                options.forEach(x => {
+                    if (x.querySelector('[type="radio"]').value.match(regexp)) {
+                        x.classList.remove("display-none");
+                        if (!(optionDiv.classList.contains("open"))) {
+                            optionDiv.classList.add("open");
+                        }
+                        ifFind = true;
+                    } else if (!(x.classList.contains("display-none")))
+                        x.classList.add("display-none");
+                });
+            }
             if (!ifFind) {
                 optionDiv.classList.remove("open");
             }
