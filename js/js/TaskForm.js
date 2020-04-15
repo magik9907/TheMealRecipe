@@ -1,4 +1,4 @@
-    "use strict";
+"use strict";
 class TaskForm {
     constructor(formSelector, defaultInput, funcList) {
         var self = this;
@@ -18,8 +18,16 @@ class TaskForm {
 
         $chkboxDiv.addEventListener('click',
             function (e) {
-                if (e.target.classList.contains('js--whatSearchRadio')) {
+                if (e.target.classList.contains('js--whatSearchRadio') && !(e.target.parentElement.classList.contains('order-1'))) {
+
+
+                    self.removeOrder(e.target);
                     data.value = e.target.value;
+                    let $selector = e.target;
+                    while (!($selector.classList.contains("order-2"))) {
+                        $selector = $selector.parentElement;
+                    }
+                    $selector.classList.add("order-1");
                     funcList.onLayoutChange(data);
                 }
             }, false);
@@ -27,10 +35,28 @@ class TaskForm {
         self.setDefaultInput($chkboxDiv, data, funcList.onLayoutChange);
     }
 
+    removeOrder($input) {
+        let $div = $input;
+        while (!($div.classList.contains("js--chkboxDiv"))) {
+            $div = $div.parentElement;
+        }
+
+        $div.parentElement.querySelector(`.order-1`).classList.remove("order-1");
+    }
+
     setDefaultInput($chkboxDiv, data, layoutFunc) {
-        // debugger;
+
         this.setChecked($chkboxDiv, data);
+        this.addOrder($chkboxDiv, data);
         layoutFunc(data);
+    }
+
+    addOrder($div, data) {
+        let $selector = $div.querySelector(`[value=${data.value}]`);
+        while (!($selector.classList.contains("order-2"))) {
+            $selector = $selector.parentElement;
+        }
+        $selector.classList.add("order-1");
     }
 
     setChecked($div, data) {
@@ -38,12 +64,13 @@ class TaskForm {
     }
 
     getFormData($form) {
-        //debugger;
-        var $input = $form.querySelector(".js--searchMeal");
-        //console.log($input.value);
         
+        var $input;
+        if (!($input = $form.querySelector(".js--searchMeal:checked")))
+            $input = $form.querySelector(".js--searchMeal");
+
         return {
-            searchingType : $input.name,
+            searchingType: $input.name,
             value: $input.value
         }
     }

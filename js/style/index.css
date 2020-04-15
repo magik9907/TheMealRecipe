@@ -1,64 +1,357 @@
-
-/* #83CC76 
-    #28BF0C
-    #F3FFAD
-    #9F6EFF
-    #7C76CC
+/* 
+    First mobile then desktop
+    320px ->
 */
-
-body,
-html{
-    margin:0;
-    padding:0;
+* {
+  box-sizing: border-box;
 }
 
-a,
+body,
+html {
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #333333;
+}
+
 p,
+a,
 h1,
 h2,
 h3,
 h4,
 h5,
-h6{
-    font-size: 16px;
-    margin: 0;
-    padding: 0;
+h6 {
+  font-size: 16px;
+  line-height: 16px;
+  margin: 0;
+  padding: 0;
 }
 
-h1{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input[type=text] {
+  font-family: "Open Sans", sans-serif;
+}
+
+h1 {
+  font-size: 2em;
+  line-height: 2em;
+}
+
+h2 {
+  font-size: 1.75em;
+  line-height: 1.75em;
+}
+
+h3 {
+  line-height: 1.5em;
+  font-size: 1.5em;
+}
+
+h4 {
+  line-height: 1.25em;
+  font-size: 1.25em;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  font-size: inherit;
+}
+a:active {
+  color: inherit;
+}
+a:hover {
+  color: inherit;
+}
+a:focus {
+  color: inherit;
+}
+a:visited {
+  color: inherit;
+}
+
+img {
+  width: 200px;
+  height: auto;
+}
+
+iframe {
+  width: 200px;
+  height: auto;
+}
+
+input[type=radio] {
+  visibility: hidden;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 0;
+  border-radius: 30px;
+  margin: 10px 0 20px;
+}
+
+button {
+  background-color: #000;
+  color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 30px;
+}
+button:hover {
+  background-color: #333333;
+}
+button:active {
+  background-color: #6e6e6e;
+  -webkit-box-shadow: inset 0px 0px 15px 14px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 15px 14px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 15px 14px rgba(0, 0, 0, 0.75);
+}
+button:focus {
+  outline: none;
+}
+
+.input-row {
+  height: 40px;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
+
+label {
+  font-size: 1.2em;
+}
+
+.display-none {
+  display: none !important;
+}
+
+.display-flex {
+  display: flex;
+}
+.display-flex.row {
+  flex-flow: row;
+}
+.display-flex.column {
+  flex-flow: column;
+}
+.display-flex .order-2 {
+  order: 1;
+}
+.display-flex .order-1 {
+  order: 0;
+}
+
+.display-block {
+  display: block;
+}
+
+.class-wrapper {
+  padding: 20px 10px;
+}
+
+.outline-text {
+  text-shadow: -3px -1px 0 #fa2828, 1px -1px 0 #fa2828, -1px 1px 0 #fa2828, 1px 1px 0 #fa2828;
+  color: #fff;
+}
+
+.btn {
+  cursor: pointer;
+  display: flex;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  line-height: 1.2em;
+  justify-content: center;
+}
+.btn * {
+  cursor: inherit;
+}
+.btn.btn-normal {
+  color: #ffffff;
+  background-color: #000;
+  border: 4px solid #333333;
+}
+
+.header-content {
+  overflow: hidden;
+  background-color: #6e6e6e;
+}
+.header-content .page-title {
+  margin: 10px 0;
+  letter-spacing: 5px;
+  text-align: center;
+  color: #ffffff;
+  font-style: italic;
+}
+
+.search-section {
+  margin-top: 25px;
+  margin-bottom: 20px;
+  background-color: #bdbdbd;
+  color: #000;
+}
+.search-section .searchBy-text {
+  margin: 0 0 10px;
+  font-size: 1.3em;
+}
+.search-section .select-bar {
+  margin-bottom: 15px;
+  overflow: hidden;
+  max-height: 40px;
+  padding-left: 45px;
+  position: relative;
+  transition: all 1s ease-in-out;
+}
+.search-section .select-bar .arrow {
+  padding: 4px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+}
+.search-section .select-bar .arrow i {
+  transform: rotateX(0);
+  transition: transform 0.5s ease-in-out;
+}
+.search-section .select-bar.open {
+  max-height: 1000px;
+}
+.search-section .select-bar.open .arrow i {
+  transform: rotateX(180deg);
+}
+.search-section .select-bar .input-row {
+  font-size: 1em;
+  height: 40px;
+}
+.search-section .select-bar .input-row.order-2 {
+  border: 3px solid #000;
+  margin-top: -3px;
+  position: relative;
+  transition: background-color 1s ease-out;
+}
+.search-section .select-bar .input-row.order-2:hover {
+  z-index: 10;
+  background-color: #6e6e6e;
+}
+.search-section .select-bar .input-row.order-1 {
+  cursor: initial;
+  color: #ffffff;
+  background-color: #6e6e6e;
+  border: 3px solid #fa2828;
+  margin-top: 0;
+  position: relative;
+  z-index: 20;
+}
+
+.searchResult {
+  flex-wrap: wrap;
+}
+.searchResult a {
+  width: 100%;
+  position: relative;
+  height: 250px;
+  transition: transform 1s;
+}
+.searchResult a:hover {
+  transform: scale(1.2, 1.2);
+}
+.searchResult a img {
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -10;
+  width: 100%;
+  height: 100%;
+}
+.searchResult a h5 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  bottom: 10px;
+  font-size: 1.5em;
+  line-height: 1.5em;
+  color: #ffffff;
+  background: linear-gradient(180deg, #6e6e6e, rgba(0, 0, 0, 0));
+}
+
+.mealRecipe {
+  margin: 25px 0;
+}
+.mealRecipe img {
+  width: 100%;
+  height: auto;
+}
+.mealRecipe h1 {
+  text-align: center;
+}
+.mealRecipe .mealInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #6e6e6e;
+  padding: 15px 10px;
+}
+.mealRecipe .mealInfo a {
+  color: #fa2828;
+}
+.mealRecipe .desc {
+  line-height: 1.25em;
+  font-size: 1.1em;
+  margin: 10px 20px;
+  text-align: justify;
+}
+
+footer {
+  background-color: #6e6e6e;
+  padding: 20px;
+  color: #ffffff;
+}
+
+@media (min-width: 420px) {
+  .search-section .select-bar .input-row {
+    width: 250px;
+  }
+
+  .searchResult {
+    justify-content: center;
+  }
+  .searchResult a {
+    width: 300px;
+  }
+  .searchResult a h5 {
     font-size: 2em;
+    line-height: 2em;
+  }
+}
+@media (min-width: 650px) {
+  .mealRecipe .image-class {
+    text-align: center;
+  }
+  .mealRecipe .image-class img {
+    width: 400px;
+  }
+
+  .searchForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-h2{
-    font-size: 1.75em;
-}
-
-h3{
-    font-size: 1.5em;
-}
-
-h4{
-    font-size: 1.25em;
-}
-
-body{
-    background-color: #83CC76;
-}
-
-.display-none{
-    display: none;
-}
-
-a{
-    display: block;
-}
-
-img{
-    width:200px;
-    height: auto;
-}
-
-iframe{
-    width:200px;
-    height: auto;
-}
+/*# sourceMappingURL=index.css.map */

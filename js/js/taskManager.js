@@ -1,6 +1,10 @@
 
 
 taskManager = (function () {
+    // settings:
+    // define if function getData() send request to server:
+    const sendrequest =true;
+
     "use strict";
     var JSONListCopy = [];
     const addHelper = function (helper) {
@@ -90,6 +94,7 @@ taskManager = (function () {
     }
 
     const getData = function (query, mainData, callback){
+        if(!sendrequest) return;
         var key  = '1';
         fetch('https://www.themealdb.com/api/json/v1/'+key+'/'+query + mainData['value'])
         .then((response) => response.json())

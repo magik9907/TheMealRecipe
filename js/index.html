@@ -1,107 +1,143 @@
 <!DOCTYPE html>
 <html lang="pl-PL">
-    <head>
-        <title>The meal recipe</title>
-        <meta name="description" content="search meal recipe to cook." />
-        <meta name="keywords" content="meal,recipe," />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="style/index.css" />
-    </head>
-    <body>
-        <header class="">
-            <h2 class=""><a href="index.html">The meal recipe</a></h2>
-        </header>
-        <main>
-            <section class="">
-                <form
-                    action="pages/meal.html"
-                    id="mealForm"
-                    class="js--mealForm"
-                    novalidate
-                >
-                    <div class="whatSearchSelector js--chkboxDiv">
-                        <p>Search by:</p>
-                        <br />
-                        <label for="whatSearchRadioName">Name</label
-                        ><input
-                            type="radio"
-                            id="whatSearchRadioName"
-                            value="name"
-                            name="searchByRadio"
-                            class="js--whatSearchRadio"
-                        />
-                        <label for="whatSearchRadioLetter">First letter</label
-                        ><input
-                            type="radio"
-                            value="letter"
-                            id="whatSearchRadioLetter"
-                            name="searchByRadio"
-                            class="js--whatSearchRadio"
-                        />
-                        <label for="whatSearchRadioCat">Categories</label
-                        ><input
-                            type="radio"
-                            id="whatSearchRadioCat"
-                            value="categories"
-                            name="searchByRadio"
-                            class="js--whatSearchRadio"
-                        />
-                        <label for="whatSearchRadioArea">Area</label
-                        ><input
-                            type="radio"
-                            value="area"
-                            id="whatSearchRadioArea"
-                            name="searchByRadio"
-                            class="js--whatSearchRadio"
-                        />
-                        <label for="whatSearchRadioIngredients"
-                            >Ingredients</label
-                        ><input
-                            type="radio"
-                            id="whatSearchRadioIngredients"
-                            value="ingredients"
-                            name="searchByRadio"
-                            class="js--whatSearchRadio"
-                        />
-                    </div>
-                    <div>
-                        <div class="js--fieldToChange">
-                            
+
+<head>
+    <title>The meal recipe</title>
+    <meta name="description" content="search meal recipe to cook." />
+    <meta name="keywords" content="meal,recipe," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style/index.css" />
+    <script>
+
+        "use strict";
+        const openerArrow = function (e) {
+            let selectBar = e;
+            while (!(selectBar.classList.contains("js--select-bar"))) {
+                selectBar = selectBar.parentElement;
+            }
+            selectBar.classList.toggle("open");
+        }
+
+        const searchOption = function (e) {
+            const inputValue = e.value;
+            const options = document.querySelectorAll(".js--searchMealOption");
+            let optionDiv = document.querySelector(".js--select-bar-option");
+
+            let regexp = new RegExp(inputValue +"", "gi");
+            let ifFind = false;
+            options.forEach(x => {
+                if (x.querySelector('[type="radio"]').value.match(regexp) ) {
+                    x.classList.remove("display-none");
+                    if (!(optionDiv.classList.contains("open"))) {
+                        optionDiv.classList.add("open");
+                    }
+                    ifFind = true;
+                } else if (!(x.classList.contains("display-none")))
+                    x.classList.add("display-none");
+            });
+            if (!ifFind) {
+                optionDiv.classList.remove("open");
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <header class="header-content">
+        <h2 class="page-title outline-text"><a href="index.html">The meal recipe</a></h2>
+    </header>
+    <main>
+        <section class="search-section class-wrapper ">
+            <form action="pages/meal.html" id="mealForm" class="js--mealForm searchForm" novalidate>
+                <div>
+                    <p class="searchBy-text outline-text">Search by:</p>
+                    <div class="js--select-bar  select-bar">
+                        <span class="btn btn-normal arrow js--opener-select-bar" onclick="openerArrow(this)"><i
+                                class="fas fa-angle-down"></i></span>
+                        <div class="whatSearchSelector js--chkboxDiv display-flex column">
+                            <div class="input-row flex order-2 btn">
+                                <label for="whatSearchRadioName">Name</label><input type="radio"
+                                    id="whatSearchRadioName" value="name" name="searchByRadio"
+                                    class="js--whatSearchRadio" />
+                            </div>
+                            <div class="input-row flex order-2 btn">
+                                <label for="whatSearchRadioLetter">First letter</label><input type="radio"
+                                    value="letter" id="whatSearchRadioLetter" name="searchByRadio"
+                                    class="js--whatSearchRadio" />
+                            </div>
+                            <div class="input-row flex order-2 btn"><label
+                                    for="whatSearchRadioCat">Categories</label><input type="radio"
+                                    id="whatSearchRadioCat" value="categories" name="searchByRadio"
+                                    class="js--whatSearchRadio" />
+                            </div>
+
+                            <div class="input-row flex order-2 btn">
+                                <label for="whatSearchRadioArea">Area</label><input type="radio" value="area"
+                                    id="whatSearchRadioArea" name="searchByRadio" class="js--whatSearchRadio" /></div>
+                            <div class="input-row flex  order-2 btn">
+                                <label for="whatSearchRadioIngredients">Ingredients</label><input type="radio"
+                                    id="whatSearchRadioIngredients" value="ingredients" name="searchByRadio"
+                                    class="js--whatSearchRadio" />
+                            </div>
                         </div>
-                        <button type="submit">Search</button>
                     </div>
-                </form>
-            </section>
-            <section class="js--mealRecipe"></section>
-            <section class="js--searchResult  "></section>
-
-            <section class="js--randomMeal"></section>
-        
-            <template id="js--mealRecipeTempl">
-                <div data-idMeal="">
-                    <h2 data-strMeal=""></h2>
-                    <img src="" data-strMealThumb="" alt="">
-                    
-                    <!-- TODO: Youtube video js script -->
-                    <!-- <iframe width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-strYoutube=""></iframe> -->
-                    <ul data-ingredientsList>
-
-                    </ul>
-                    
-                    <p data-strInstructions></p>
-
                 </div>
-            </template>
-            <template id="js--ingredientsListTempl">
-                <li><span data-strMeasure></span> <span data-strIngredient></span></li>
-            </template>
-        </main>
-        <script src="js/notificationHelper.js"></script>
-        <script src="js/rendererManager.js"></script>
-        <script src="js/TaskForm.js"></script>
-        <script src="js/taskManager.js"></script>
-        <script src="js/main.js"></script>
-    </body>
+
+                <div>
+                    <div class=" js--fieldToChange">
+
+                    </div>
+                    <button type="submit">Search</button>
+                </div>
+
+            </form>
+        </section>
+        <section class="js--mealRecipe mealRecipe"></section>
+        <section class="js--searchResult searchResult display-flex "></section>
+
+        <template id="js--mealRecipeTempl">
+            <div data-idMeal="">
+                <h1 data-strMeal="" class="outline-text"></h1>
+                <div class="image-class">
+                    <img src="" data-strMealThumb="" alt="">
+                </div>
+                <dic class="mealInfo class-wrapper">
+                    <div>Category: <span data-strCategory></span></div>
+                    <div>Drinks: <span data-strDrinkAlternate=""></span></div>
+                    <div>Tags: <span data-strTags></span></div>
+                    <a href="" data-strSource>Source</a>
+                    <a href="" data-strYoutube>Yutube</a>
+                </dic>
+                <!-- TODO: Youtube video js script -->
+                <!-- <iframe width="560" height="315" src="" frameborder="0" 
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+                    data-strYoutube=""></!-->
+                <ul data-ingredientsList>
+                </ul>
+                <p data-strInstructions class="desc class-wrapper"></p>
+
+            </div>
+        </template>
+        <template id="js--ingredientsListTempl">
+            <li><span data-strMeasure></span> <span data-strIngredient></span></li>
+        </template>
+    </main>
+    <footer>
+        &copy; 2020 by magik9907
+    </footer>
+
+
+    <script src="js/notificationHelper.js"></script>
+    <script src="js/rendererManager.js"></script>
+    <script src="js/TaskForm.js"></script>
+    <script src="js/taskManager.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
 </html>

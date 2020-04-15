@@ -1,7 +1,7 @@
 (function(){
     "use strict"
     taskManager.addHelper(rendererManager);
-    taskManager.addHelper(notificationHelper);
+//    taskManager.addHelper(notificationHelper);
 
     document.querySelector(".js--searchResult").addEventListener("click", function(e){
         let anchor = null;
