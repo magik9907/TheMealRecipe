@@ -23,28 +23,6 @@
             selectBar.classList.toggle("open");
         }
 
-        const searchOption = function (e) {
-            const inputValue = e.value;
-            const options = document.querySelectorAll(".js--searchMealOption");
-            let optionDiv = document.querySelector(".js--select-bar-option");
-
-            let regexp = new RegExp(inputValue +"", "gi");
-            let ifFind = false;
-            options.forEach(x => {
-                if (x.querySelector('[type="radio"]').value.match(regexp) ) {
-                    x.classList.remove("display-none");
-                    if (!(optionDiv.classList.contains("open"))) {
-                        optionDiv.classList.add("open");
-                    }
-                    ifFind = true;
-                } else if (!(x.classList.contains("display-none")))
-                    x.classList.add("display-none");
-            });
-            if (!ifFind) {
-                optionDiv.classList.remove("open");
-            }
-
-        }
     </script>
 </head>
 
@@ -54,8 +32,9 @@
     </header>
     <main>
         <section class="search-section class-wrapper ">
-            <form action="pages/meal.html" id="mealForm" class="js--mealForm searchForm" novalidate>
-                <div>
+
+            <div>
+                <form action="" id="mealForm" class="js--mealTypeForm typeForm" novalidate>
                     <p class="searchBy-text outline-text">Search by:</p>
                     <div class="js--select-bar  select-bar">
                         <span class="btn btn-normal arrow js--opener-select-bar" onclick="openerArrow(this)"><i
@@ -87,19 +66,22 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
+            </div>
 
-                <div>
-                    <div class=" js--fieldToChange">
+            <div>
+                <form action="" class="js--mealSearchingForm searchForm">
+                    <div class=" js--changeField">
 
                     </div>
                     <button type="submit">Search</button>
-                </div>
+                </form>
+            </div>
 
             </form>
         </section>
         <section class="js--mealRecipe mealRecipe"></section>
-        <section class="js--searchResult searchResult display-flex "></section>
+        <section class="js--searchResult searchResult display-flex " id="mealRecipes"></section>
 
         <template id="js--mealRecipeTempl">
             <div data-idMeal="">
@@ -111,8 +93,8 @@
                     <div>Category: <span data-strCategory></span></div>
                     <div>Drinks: <span data-strDrinkAlternate=""></span></div>
                     <div>Tags: <span data-strTags></span></div>
-                    <a href="" data-strSource>Source</a>
-                    <a href="" data-strYoutube>Yutube</a>
+                    <a href="" target="_blank" data-strSource>Source</a>
+                    <a href="" target="_blank" data-strYoutube>Yutube</a>
                 </dic>
                 <!-- TODO: Youtube video js script -->
                 <!-- <iframe width="560" height="315" src="" frameborder="0" 
@@ -129,14 +111,14 @@
         </template>
     </main>
     <footer>
-        &copy; 2020 by magik9907
+        <p>&copy; 2020 by magik9907</p>
     </footer>
 
 
     <script src="js/notificationHelper.js"></script>
     <script src="js/rendererManager.js"></script>
-    <script src="js/TaskForm.js"></script>
     <script src="js/taskManager.js"></script>
+    <script src="js/TaskForm.js"></script>
     <script src="js/main.js"></script>
 </body>
 

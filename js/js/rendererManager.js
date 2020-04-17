@@ -59,15 +59,16 @@ var rendererManager = (function () {
   const generateSearchResult = (data) => {
     let $resultDiv = document.querySelector('.js--searchResult');
     var mealsGrid = '';
-
-    data.json.meals.forEach((element, index) => {
-      mealsGrid += `<a class="" href="${element.idMeal}">`;
-      if (element.strMealThumb)
-        mealsGrid += `<img src="${element.strMealThumb}" />`;
-      mealsGrid += `<h5 class="outline-text">${element.strMeal}</h5>`;
-      mealsGrid += '  </a>';
-    });
-
+    if (!(data.json.meals)) mealsGrid = "<p>Meals not found</p>";
+    else {
+      data.json.meals.forEach((element, index) => {
+        mealsGrid += `<a class="" target="_blank" href="${element.idMeal}">`;
+        if (element.strMealThumb)
+          mealsGrid += `<img src="${element.strMealThumb}" />`;
+        mealsGrid += `<h5 class="outline-text">${element.strMeal}</h5>`;
+        mealsGrid += '  </a>';
+      });
+    }
     $resultDiv.innerHTML = mealsGrid;
   };
 
@@ -78,9 +79,9 @@ var rendererManager = (function () {
   };
 
   const setFormInput = (data) => {
+    var inputLayout = null;
     var json = (data.json) ? data.json : null;
 
-    var inputLayout = "";
     switch (data.value) {
       case 'name':
         inputLayout =
@@ -94,11 +95,11 @@ var rendererManager = (function () {
       case 'categories':
         inputLayout =
           `<label for="categorieName">Categorie name:</label>
-          <input type="text" class="js--searchMeal" id="categorieName" onkeyup="searchOption(this)" placeholder="ex: breakfast" name="categorieName"/>
+          <input type="text" class="js--searchMeal" id="categorieName" placeholder="ex: breakfast" name="categorieMealsName"/>
           <div class="js--select-bar-option js--select-bar open"> 
-          <div class="display-flex column js--searching-option">`;
+          <div class="display-flex column js--foundOptions">`;
         inputLayout += json.meals.reduce((retValue = "", x, number) => {
-          return (typeof (retValue) == "object") ? createRadio("categorieMealsName", retValue.strCategory) +createRadio("categorieMealsName", x.strCategory): retValue + createRadio("categorieMealsName", x.strCategory);
+          return (typeof (retValue) == "object") ? createRadio("categorieMealsName", retValue.strCategory) + createRadio("categorieMealsName", x.strCategory) : retValue + createRadio("categorieMealsName", x.strCategory);
         });
         inputLayout += "</div></div>";
         break;
@@ -106,24 +107,22 @@ var rendererManager = (function () {
       case 'area':
         inputLayout =
           `<label for="areaName">Area name:</label>
-          <input type="text" class="js--searchMeal" id="areaName" placeholder="ex: Mexic" name="areaName"/>
-          <div class="js--select-bar select-bar open"> 
-          <span class="btn btn-normal arrow js--opener-select-bar" onclick="openerArrow(this)"><i class="fas fa-angle-down"></i></span>
-          <div class="display-flex column">`;
-        inputLayout += json.meals.reduce((retValue ="", x, number) => {
-          return (typeof (retValue) == "object") ? createRadio("areaMealsName", retValue.strArea) +createRadio("ingredientMealsName", x.strIngredient): retValue + createRadio("areaMealsName", x.strArea);
+          <input type="text" class="js--searchMeal" id="areaName" placeholder="ex: Mexic" name="areaMealsName"/>
+          <div class="js--select-bar-option js--select-bar open"> 
+          <div class="display-flex column js--foundOptions">`;
+        inputLayout += json.meals.reduce((retValue = "", x, number) => {
+          return (typeof (retValue) == "object") ? createRadio("areaMealsName", retValue.strArea) + createRadio("ingredientMealsName", x.strIngredient) : retValue + createRadio("areaMealsName", x.strArea);
         });
         inputLayout += "</div></div>";
         break;
       case 'ingredients':
         inputLayout =
           `<label for="ingredientName">Ingredient name:</label>
-          <input type="text" class="js--searchMeal" id="ingredientName" placeholder="ex: Chicken" name="ingredientName"/>
-          <div class="js--select-bar select-bar open">
-          <span class="btn btn-normal arrow js--opener-select-bar" onclick="openerArrow(this)"><i class="fas fa-angle-down"></i></span>
-          <div class="display-flex column">`;
-        inputLayout += json.meals.reduce((retValue="", x, number) => {
-          return (typeof (retValue) == "object") ? createRadio("ingredientMealsName", retValue.strIngredient) +createRadio("ingredientMealsName", x.strIngredient): retValue + createRadio("ingredientMealsName", x.strIngredient);
+          <input type="text" class="js--searchMeal" id="ingredientName" placeholder="ex: Chicken" name="ingredientMealsName"/>
+          <div class="js--select-bar-option js--select-bar open">
+          <div class="display-flex column js--foundOptions">`;
+        inputLayout += json.meals.reduce((retValue = "", x, number) => {
+          return (typeof (retValue) == "object") ? createRadio("ingredientMealsName", retValue.strIngredient) + createRadio("ingredientMealsName", x.strIngredient) : retValue + createRadio("ingredientMealsName", x.strIngredient);
         });
         inputLayout += "</div></div>";
         break;
@@ -131,7 +130,10 @@ var rendererManager = (function () {
         inputLayout = "Bad type searching choosen";
     }
 
-    data.selector.innerHTML = inputLayout;
+    data.Form.setLayout(inputLayout);
+    data.sForm.addEvents(".js--searchMeal", ".js--foundOptions");
+
+    // mealSearchingForm.addEvents(".js--searchMeal", ".js--foundOptions");
   }
 
   return {
