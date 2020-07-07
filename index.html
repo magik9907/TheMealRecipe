@@ -11,7 +11,7 @@
         rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="style/index.css" />
+    <link rel="stylesheet" href="style/css/index.min.css" />
     <script>
 
         "use strict";
@@ -38,7 +38,7 @@
                     <p class="searchBy-text outline-text">Search by:</p>
                     <div class="js--select-bar  select-bar">
                         <span class="btn btn-normal arrow js--opener-select-bar" onclick="openerArrow(this)"><i
-                                class="fas fa-angle-down"></i></span>
+                                class="fas fa-angle-down arrow-symbol"></i></span>
                         <div class="whatSearchSelector js--chkboxDiv display-flex column">
                             <div class="input-row flex order-2 btn">
                                 <label for="whatSearchRadioName">Name</label><input type="radio"
@@ -89,13 +89,13 @@
                 <div class="image-class">
                     <img src="" data-strMealThumb="" alt="">
                 </div>
-                <dic class="mealInfo class-wrapper">
+                <div class="mealInfo class-wrapper">
                     <div>Category: <span data-strCategory></span></div>
                     <div>Drinks: <span data-strDrinkAlternate=""></span></div>
                     <div>Tags: <span data-strTags></span></div>
                     <a href="" target="_blank" data-strSource>Source</a>
                     <a href="" target="_blank" data-strYoutube>Yutube</a>
-                </dic>
+                </div>
                 <!-- TODO: Youtube video js script -->
                 <!-- <iframe width="560" height="315" src="" frameborder="0" 
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
@@ -113,8 +113,8 @@
     <footer>
         <p>&copy; 2020 by magik9907</p>
     </footer>
-
-
+    <script src="js/error.js"></script>
+    <script src="js/urlHelper.js"></script>
     <script src="js/notificationHelper.js"></script>
     <script src="js/rendererManager.js"></script>
     <script src="js/taskManager.js"></script>
