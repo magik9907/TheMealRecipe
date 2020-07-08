@@ -156,6 +156,7 @@ button {
 }
 
 label {
+    text-align:center;
     font-size: 1.2em;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -265,101 +266,50 @@ label {
         font-size: 1.3em;
     }
 
-    .select-bar {
-        margin-bottom: 15px;
-        overflow: hidden;
-        max-height: 40px;
-        padding-left: 45px;
-        position: relative;
-        -webkit-transition: all 1s ease-in-out;
-        -o-transition: all 1s ease-in-out;
-        transition: all 1s ease-in-out;
+    .input-row {
+        font-size: 1em;
+        height: 40px;
 
-        .arrow {
-            padding: 4px;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 40px;
-
-            i {
-                -webkit-transform: rotateX(0);
-                transform: rotateX(0);
-                -webkit-transition: -webkit-transform 0.5s ease-in-out;
-                transition: -webkit-transform 0.5s ease-in-out;
-                -o-transition: transform 0.5s ease-in-out;
-                transition: transform 0.5s ease-in-out;
-                transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
-
-                &::before {
-                    position: absolute;
-                    left: 50%;
-                    top: 50%;
-                    margin-left: -5px;
-                    margin-top: -9px;
-                }
-            }
+        label {
+            width: 100%;
+            height: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
         }
 
-        &.open {
-            max-height: 1000px;
+        &.order-2 {
+            border: 3px solid $lighterBgTextColor;
+            margin-top: -3px;
+            position: relative;
+            -webkit-transition: background-color 1s ease-out;
+            -o-transition: background-color 1s ease-out;
+            transition: background-color 1s ease-out;
 
-            .arrow {
-                i {
-                    -webkit-transform: rotateX(180deg);
-                    transform: rotateX(180deg);
-                }
-            }
-
-        }
-
-        .input-row {
-            font-size: 1em;
-            height: 40px;
-
-            label {
-                width: 100%;
-                height: 100%;
-                display: -webkit-box;
-                display: -ms-flexbox;
-                display: flex;
-                -webkit-box-pack: center;
-                -ms-flex-pack: center;
-                justify-content: center;
-                -webkit-box-align: center;
-                -ms-flex-align: center;
-                align-items: center;
-            }
-
-            &.order-2 {
-                border: 3px solid $lighterBgTextColor;
-                margin-top: -3px;
-                position: relative;
-                -webkit-transition: background-color 1s ease-out;
-                -o-transition: background-color 1s ease-out;
-                transition: background-color 1s ease-out;
-
-                &:hover {
-                    z-index: 10;
-                    background-color: $lightGrayBg;
-                }
-            }
-
-            &.order-1 {
-                cursor: initial;
-                color: $fontColor;
+            &:hover {
+                z-index: 10;
                 background-color: $lightGrayBg;
-                border: 3px solid $red;
-                margin-top: 0;
-                position: relative;
-                z-index: 20;
             }
-
-
         }
-    }
 
+        &.order-1 {
+            cursor: initial;
+            color: $fontColor;
+            background-color: $lightGrayBg;
+            border: 3px solid $red;
+            margin-top: 0;
+            position: relative;
+            z-index: 20;
+        }
+
+
+    }
 }
 
 .searchResult {
@@ -377,7 +327,6 @@ label {
         transition: transform 1s, -webkit-transform 1s;
         margin-bottom: 5px;
 
-        &:hover {}
 
         img {
             -o-object-fit: cover;
@@ -451,11 +400,70 @@ footer {
     color: $fontColor;
 }
 
-@media (min-width : 420px) {
-    .search-section .select-bar .input-row {
-        width: 250px;
+.select-bar {
+    margin-bottom: 15px;
+    overflow: hidden;
+    max-height: 40px;
+    padding-left: 45px;
+    position: relative;
+    -webkit-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+    &.open {
+        max-height: 1000px;
+
+        .arrow {
+            i {
+                -webkit-transform: rotateX(180deg);
+                transform: rotateX(180deg);
+            }
+        }
     }
 
+    .arrow {
+        padding: 4px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 40px;
+        height: 40px;
+
+        i {
+            -webkit-transform: rotateX(0);
+            transform: rotateX(0);
+            -webkit-transition: -webkit-transform 0.5s ease-in-out;
+            transition: -webkit-transform 0.5s ease-in-out;
+            -o-transition: transform 0.5s ease-in-out;
+            transition: transform 0.5s ease-in-out;
+            transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
+
+            &::before {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin-left: -5px;
+                margin-top: -9px;
+            }
+        }
+    }
+}
+
+.select-bar-options {
+    .input-row,
+    .arrow{
+        position: relative;
+        width: 100%;
+    }
+}
+
+@media (min-width : 420px) {
+    .search-section {
+        .select-bar {
+                width: 250px;
+            
+        }
+    }
+    
     .searchResult {
         -webkit-box-pack: center;
         -ms-flex-pack: center;

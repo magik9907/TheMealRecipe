@@ -12,18 +12,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <meta charset="utf-8" />
     <link rel="stylesheet" href="style/css/index.min.css" />
-    <script>
-
-        "use strict";
-        const openerArrow = function (e) {
-            let selectBar = e;
-            while (!(selectBar.classList.contains("js--select-bar"))) {
-                selectBar = selectBar.parentElement;
-            }
-            selectBar.classList.toggle("open");
-        }
-
-    </script>
 </head>
 
 <body>
@@ -37,8 +25,10 @@
                 <form action="" id="mealForm" class="js--mealTypeForm typeForm" novalidate>
                     <p class="searchBy-text outline-text">Search by:</p>
                     <div class="js--select-bar  select-bar">
-                        <span class="btn btn-normal arrow js--opener-select-bar" onclick="openerArrow(this)"><i
-                                class="fas fa-angle-down arrow-symbol"></i></span>
+                        <span class="btn btn-normal arrow js--opener-select-bar" onclick="openerArrow(this)">
+                            <i class="fas fa-angle-down arrow-symbol">
+                            </i>
+                        </span>
                         <div class="whatSearchSelector js--chkboxDiv display-flex column">
                             <div class="input-row flex order-2 btn">
                                 <label for="whatSearchRadioName">Name</label><input type="radio"

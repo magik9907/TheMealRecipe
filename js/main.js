@@ -1,8 +1,18 @@
+//function to control div open/close
+const openerArrow =  (e) => {
+    let selectBar = e;
+    while (!(selectBar.classList.contains("js--select-bar"))) {
+        selectBar = selectBar.parentElement;
+    }
+    selectBar.classList.toggle("open");
+}
+
+
 (function () {
     "use strict";
     let mealTypeForm;
     let mealSearchingForm;
-
+    
     try {
         mealTypeForm = new TypeTaskForm(".js--mealTypeForm");
         mealSearchingForm = new SearchTaskForm(".js--mealSearchingForm");

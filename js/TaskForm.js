@@ -77,25 +77,20 @@ SearchTaskForm.prototype.removeClassName = function (elem, className) {
 }
 
 SearchTaskForm.prototype.queryOption = function (value) {
-    if (!value)
-        return;
     const regex = new RegExp(value + "", "gi");
     let $input;
-    let ifFound = false;
-
     const searchAndAction = ($input) => {
         let elem = this.searchParentByClass($input, "input-row");
         return (func) => (func(elem));
     };
-
+   
     (this.$options).forEach(element => {
         $input = element.querySelector("input");
-        if ($input.value.match(regex)) {
+        if ((value !== "" && $input.value.match(regex)) || (element.classList.contains("js--emptyOption") && value === "")) {
             searchAndAction(element)(
                 (elem) => { this.removeClassName(elem, "display-none"); }
             );
-            ifFound = true;
-        } else {
+        } else {         
             searchAndAction(element)(
                 (elem) => { this.addClassName(elem, "display-none"); }
             );
@@ -111,7 +106,7 @@ SearchTaskForm.prototype.addEvents = function (textSelector, optionDivSelector) 
     if (this.$foDiv)
         this.$options = (this.$foDiv).querySelectorAll(".js--searchMealOption");
 
-    //form option query
+    //form option query, it remove or add class display-none to correct option
     const itFunction = (e) => {
         if (this.$options && this.$foDiv) {
             let $input = e.target;

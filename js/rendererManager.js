@@ -52,7 +52,7 @@ var rendererManager = (function () {
       tag.appendChild(templBody);
   }
 
-  const ingredientListItem = (x, ingredient)=>{
+  const ingredientListItem = (x, ingredient) => {
     var templList = document.querySelector("#js--ingredientsListTempl").content;
     var dfElement = templList.cloneNode(true);
     dfElement.querySelector("[data-" + x.replace(/\d+/, "") + "]").textContent = ingredient;
@@ -101,8 +101,12 @@ var rendererManager = (function () {
         inputLayout =
           `<label for="categorieName" class="searchBy-text outline-text">Categorie name:</label>
           <input type="text" class="js--searchMeal" id="categorieName" placeholder="ex: breakfast" name="categorieMealsName"/>
-          <div class="js--select-bar-option js--select-bar open"> 
+          <div class="js--select-bar-option select-bar select-bar-options js--select-bar "> 
+          <span class=\"btn btn-normal arrow js--opener-select-bar\" onclick=\"openerArrow(this)\"><i class=\"fas fa-angle-down arrow-symbol\"></i></span>
           <div class="display-flex column js--foundOptions">`;
+        inputLayout += `<div class="input-row flex btn btn-normal js--emptyOption js--searchMealOption">
+          <label for="emptyOption">Categorie not found</label>
+          <input type="radio" value=""  id="emptyOption"  name="categorieMealsName"/></div>`;
         inputLayout += json.meals.reduce((retValue = "", x, number) => {
           return (typeof (retValue) == "object") ? createRadio("categorieMealsName", retValue.strCategory) + createRadio("categorieMealsName", x.strCategory) : retValue + createRadio("categorieMealsName", x.strCategory);
         });
@@ -113,8 +117,12 @@ var rendererManager = (function () {
         inputLayout =
           `<label for="areaName" class="searchBy-text outline-text">Area name:</label>
           <input type="text" class="js--searchMeal" id="areaName" placeholder="ex: Mexic" name="areaMealsName"/>
-          <div class="js--select-bar-option js--select-bar open"> 
+          <div class="js--select-bar-option select-bar select-bar-options js--select-bar "> 
+          <span class=\"btn btn-normal arrow js--opener-select-bar\" onclick=\"openerArrow(this)\"><i class=\"fas fa-angle-down arrow-symbol\"></i></span>
           <div class="display-flex column js--foundOptions">`;
+        inputLayout += `<div class="input-row flex btn btn-normal js--emptyOption js--searchMealOption">
+          <label for="emptyOption">Area not found</label>
+          <input type="radio" value=""  id="emptyOption"  name="areaMealsName"/></div>`;
         inputLayout += json.meals.reduce((retValue = "", x, number) => {
           return (typeof (retValue) == "object") ? createRadio("areaMealsName", retValue.strArea) + createRadio("ingredientMealsName", x.strIngredient) : retValue + createRadio("areaMealsName", x.strArea);
         });
@@ -124,12 +132,17 @@ var rendererManager = (function () {
         inputLayout =
           `<label for="ingredientName" class="searchBy-text outline-text">Ingredient name:</label>
           <input type="text" class="js--searchMeal" id="ingredientName" placeholder="ex: Chicken" name="ingredientMealsName"/>
-          <div class="js--select-bar-option js--select-bar open">
+          <div class="js--select-bar-option select-bar select-bar-options js--select-bar ">
+          <span class=\"btn btn-normal arrow js--opener-select-bar\" onclick=\"openerArrow(this)\"><i class=\"fas fa-angle-down arrow-symbol\"></i></span>
           <div class="display-flex column js--foundOptions">`;
+        inputLayout += `<div class="input-row flex btn btn-normal  js--emptyOption js--searchMealOption">
+          <label for="emptyOption">Ingredient not found</label>
+          <input type="radio" value=""  id="emptyOption"  name="ingredientMealsName"/></div>`;
         inputLayout += json.meals.reduce((retValue = "", x, number) => {
           return (typeof (retValue) == "object") ? createRadio("ingredientMealsName", retValue.strIngredient) + createRadio("ingredientMealsName", x.strIngredient) : retValue + createRadio("ingredientMealsName", x.strIngredient);
         });
         inputLayout += "</div></div>";
+
         break;
       default:
         inputLayout = "<span class=\"outline-text exception-text\">Bad type searching choosen</span>";
