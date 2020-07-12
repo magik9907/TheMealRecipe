@@ -22,6 +22,7 @@ const openerArrow =  (e) => {
 
     taskManager.addHelper(rendererManager);
     taskManager.addHelper(notificationHelper);
+    try{
     document.querySelector(".js--searchResult").addEventListener("click", function (e) {
         e.preventDefault();
 
@@ -31,8 +32,8 @@ const openerArrow =  (e) => {
         do {
             anchor = (e.path[i].localName == 'a') ? e.path[i] : null;
             i++;
-        } while (anchor == null);
-
+        } while (anchor == null && e.path[i].localName == 'main');
+        if(anchor == null) return;
         anchor = anchor.href.split('/').pop();
 
         taskManager.generateRecipe({ value: anchor });
@@ -75,4 +76,7 @@ const openerArrow =  (e) => {
         });
     });
     mealTypeForm.setDefault("name");
+}catch(e){
+    notificationHelper.update(e);
+}
 })();

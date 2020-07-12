@@ -83,7 +83,7 @@ SearchTaskForm.prototype.queryOption = function (value) {
         let elem = this.searchParentByClass($input, "input-row");
         return (func) => (func(elem));
     };
-   
+
     (this.$options).forEach(element => {
         $input = element.querySelector("input");
         if ((value !== "" && $input.value.match(regex)) || (element.classList.contains("js--emptyOption") && value === "")) {
