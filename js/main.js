@@ -1,36 +1,62 @@
-(function () {
-    "use strict"
-    taskManager.addHelper(rendererManager);
-    //    taskManager.addHelper(notificationHelper);
+//function to control div open/close
+const openerArrow =  (e) => {
+    let selectBar = e;
+    while (!(selectBar.classList.contains("js--select-bar"))) {
+        selectBar = selectBar.parentElement;
+    }
+    selectBar.classList.toggle("open");
+}
 
+
+(function () {
+    "use strict";
+    let mealTypeForm;
+    let mealSearchingForm;
+    
+    try {
+        mealTypeForm = new TypeTaskForm(".js--mealTypeForm");
+        mealSearchingForm = new SearchTaskForm(".js--mealSearchingForm");
+    } catch (error) {
+        notificationHelper.update("error", error)
+    }
+
+    taskManager.addHelper(rendererManager);
+    taskManager.addHelper(notificationHelper);
+    try{
     document.querySelector(".js--searchResult").addEventListener("click", function (e) {
-        let anchor = null;
         e.preventDefault();
+
+        let anchor = null;
         let i = 0;
+
         do {
             anchor = (e.path[i].localName == 'a') ? e.path[i] : null;
             i++;
-        } while (anchor == null);
+        } while (anchor == null && e.path[i].localName == 'main');
+        if(anchor == null) return;
         anchor = anchor.href.split('/').pop();
 
         taskManager.generateRecipe({ value: anchor });
     }, true);
 
-    const mealTypeForm = new TypeTaskForm(".js--mealTypeForm", ".js--mealSearchingForm");
-    const mealSearchingForm = new SearchTaskForm(".js--mealSearchingForm");
     mealTypeForm.addEventToElements(".input-row", "click", function (e) {
         let $inputRow = e.target;
+        let $input;
+        let $rowsContainer = null;
+        let data = null;
+
         while (!($inputRow.classList.contains("input-row"))) {
             $inputRow = $inputRow.parentElement;
         }
-        let $input = $inputRow.querySelector("input[type=\"radio\"");
-        let $rowsContainer = null;
+
+        $input = $inputRow.querySelector("input[type=\"radio\"]");
+
         if ($input.checked) {
             if (($rowsContainer = $inputRow.parentElement.querySelector(".order-1")))
                 $rowsContainer.classList.remove("order-1");
             $inputRow.classList.add("order-1");
 
-            let data = {
+            data = {
                 value: $input.value,
                 searchingType: $input.name,
                 Form: mealTypeForm,
@@ -43,16 +69,14 @@
     mealSearchingForm.onSubmitEvent((e) => {
         e.preventDefault();
         let $input = e.target.querySelector(".js--searchMeal");
-        
+
         taskManager.onFormSubmit({
             value: $input.value.toLowerCase(),
             searchingType: $input.name
         });
-
     });
     mealTypeForm.setDefault("name");
-
-
-
-
+}catch(e){
+    notificationHelper.update(e);
+}
 })();
