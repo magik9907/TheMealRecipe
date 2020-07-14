@@ -67,7 +67,7 @@ class SearchResult {
         df = this.generateInputText("meal name","mealName", "ex: Arrabiata")
         break;
       case 'letter':
-        df = this.generateInputText("first letter","flMealName", "ex: a");
+        df = this.generateInputText("first letter","flMealsName", "ex: a");
         break;
       default:
         df = "<span class=\"outline-text exception-text\">Bad type searching choosen</span>";

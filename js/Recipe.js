@@ -57,6 +57,13 @@ class Recipe {
                 templBody.querySelector("[data-ingredientsList]").appendChild(this.generateIngredientList(selectorIngredients, x));
             } else if (tag = templBody.querySelector("[data-" + x + "]")) {
                 switch (x) {
+                    case 'strMeal':
+                        tag.textContent = this.recipe[x];
+                        tag = templBody.querySelector("img")
+                        
+                        tag.setAttribute("title" , this.recipe[x]);
+                        tag.setAttribute("alt" , this.recipe[x]);
+                        break;
                     case 'idMeal':
                         tag.setAttribute("data-" + x, this.recipe[x]);
                         break;

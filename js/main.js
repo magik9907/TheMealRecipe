@@ -20,8 +20,10 @@ const openerArrow =  (e) => {
         notificationHelper.update("error", error)
     }
 
-    taskManager.addHelper(rendererManager);
+    taskManager.addHelper(rendererHelper);
     taskManager.addHelper(notificationHelper);
+    taskManager.addHelper(urlHelper);
+    
     try{
     document.querySelector(".js--searchResult").addEventListener("click", function (e) {
         e.preventDefault();

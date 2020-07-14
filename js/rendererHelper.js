@@ -1,4 +1,4 @@
-var rendererManager = (function () {
+var rendererHelper = (function () {
   
   'use strict';
   const update = (task, data) => {
@@ -28,7 +28,7 @@ var rendererManager = (function () {
       data.json.meals.forEach((element, index) => {
         mealsGrid += `<a class="" target="_blank" href="${element.idMeal}">`;
         if (element.strMealThumb)
-          mealsGrid += `<img src="${element.strMealThumb}" />`;
+          mealsGrid += `<img src="${element.strMealThumb}" alt="${element.strMeal}" title="${element.strMeal}" />`;
         mealsGrid += `<h5 class="outline-text">${element.strMeal}</h5>`;
         mealsGrid += '  </a>';
       });
@@ -45,6 +45,7 @@ var rendererManager = (function () {
     inputLayout = searchResult.generateHtml(data.value);
 
     data.sForm.setLayout(inputLayout);
+    debugger;
     data.sForm.addEvents(".js--searchMeal", ".js--foundOptions");
   }
 
