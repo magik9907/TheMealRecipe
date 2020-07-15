@@ -29,11 +29,6 @@ const urlHelper = (function () {
 
     const pushState = (state, url) => {
         history.pushState(state, document.title, (url) ? "?" + url : "");
-        notificationHelper.update("test", {
-            "window.url": window.location.pathname,
-            "search": window.location.search
-        });
-
     }
 
     const setState = (type, data) => {

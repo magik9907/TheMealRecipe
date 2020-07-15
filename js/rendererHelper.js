@@ -45,7 +45,6 @@ var rendererHelper = (function () {
     inputLayout = searchResult.generateHtml(data.value);
 
     data.sForm.setLayout(inputLayout);
-    debugger;
     data.sForm.addEvents(".js--searchMeal", ".js--foundOptions");
   }
 

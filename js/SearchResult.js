@@ -2,30 +2,63 @@ class SearchResult {
 
   constructor(data) {
     notificationHelper.update(data);
-    if (data && data.meals) {
-      let arr = [...(data.meals)];
-      this.options = arr.reduce((prev, next) => {
-        for (let x in next) {
-          if (prev.hasOwnProperty(x)) {
-            prev[x].push(next[x]);
-          } else {
-            prev[x] = [];
-            prev[x].push(next[x]);
+    if (data) {
+      if (data.value === "ingredients")
+        generateIngredientsData(data);
+      if (data && data.meals) {
+        let arr = [...(data.meals)];
+        this.options = arr.reduce((prev, next) => {
+          for (let x in next) {
+            if (prev.hasOwnProperty(x)) {
+              prev[x].push(next[x]);
+            } else {
+              prev[x] = [];
+              prev[x].push(next[x]);
+            }
           }
-        }
-        return prev;
-      }, {});
+          return prev;
+        }, {});
+      } else
+        this.options = null;
     }
     else
       this.options = null;
+
+    notificationHelper.update("searchresult", this.options)
   }
-  generateInputText(name,id, placeholder = null) {
+  generateIngredientsData(data) {
+    const json = data.json;
+    this.options = json.reduce((prev, next) => {
+      next.map(arr => {
+        if (arr.hasOwnProperty(x)) {
+          prev[x].push(next["strIngredients"]);
+        } else {
+          prev[x] = [];
+          prev[x].push(next["strIngredients"]);
+        }
+      })
+      return prev;
+    }, {});
+  }
+  generateInputText(name, id, placeholder = null) {
     return `<label for="${id}" class="searchBy-text outline-text">Search by: ${name}</label>
     <input type="text" class="js--searchMeal" id="${id}" placeholder="${(placeholder) ? placeholder : ``}" name="${id}"/>`;
   }
+  getKey(name) {
+    let arr = name.split("");
+    arr[0] = arr[0].toUpperCase();
+    let str = "str".concat(arr.join("").replace("MealsName", ""));
+    let regex = new RegExp(str);
+    for (let x in this.options) {
+      if (regex.test(x))
+        return x;
+    }
+    return "";
+  }
   generateOptions(name) {
     let df;
-    let optionsArr = this.options[Object.keys(this.options)[0]];
+    let optionsArr = this.options[this.getKey(name)];
+    console.log(optionsArr);
     const createRadio = (type, value, addClass, addTextDesc) => {
       return `<div class="input-row flex btn btn-normal display-none js--searchMealOption ${addClass}">
             <label for="${type + value}">${(value) ? value : addTextDesc}</label>
@@ -46,15 +79,15 @@ class SearchResult {
     if (this.options) {
       switch (type) {
         case 'categories':
-          df = this.generateInputText("categorie","categorieMealsName", "ex: breakfast");
-          df += this.generateOptions("categorieMealsName");
+          df = this.generateInputText("category", "categoryMealsName", "ex: breakfast");
+          df += this.generateOptions("categoryMealsName");
           break;
         case 'area':
           df = this.generateInputText("area", "areaMealsName", "ex: Mexic");
           df += this.generateOptions("areaMealsName");
           break;
         case 'ingredients':
-          df = this.generateInputText("ingredient","ingredientMealsName", "ex: chicken");
+          df = this.generateInputText("ingredient", "ingredientMealsName", "ex: chicken");
           df += this.generateOptions("ingredientMealsName");
           break;
         default:
@@ -64,10 +97,10 @@ class SearchResult {
     }
     switch (type) {
       case "name":
-        df = this.generateInputText("meal name","mealName", "ex: Arrabiata")
+        df = this.generateInputText("meal name", "mealName", "ex: Arrabiata")
         break;
       case 'letter':
-        df = this.generateInputText("first letter","flMealsName", "ex: a");
+        df = this.generateInputText("first letter", "flMealsName", "ex: a");
         break;
       default:
         df = "<span class=\"outline-text exception-text\">Bad type searching choosen</span>";
