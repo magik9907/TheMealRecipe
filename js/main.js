@@ -1,5 +1,5 @@
 //function to control div open/close
-const openerArrow =  (e) => {
+const openerArrow = (e) => {
     let selectBar = e;
     while (!(selectBar.classList.contains("js--select-bar"))) {
         selectBar = selectBar.parentElement;
@@ -12,7 +12,7 @@ const openerArrow =  (e) => {
     "use strict";
     let mealTypeForm;
     let mealSearchingForm;
-    
+
     try {
         mealTypeForm = new TypeTaskForm(".js--mealTypeForm");
         mealSearchingForm = new SearchTaskForm(".js--mealSearchingForm");
@@ -23,62 +23,78 @@ const openerArrow =  (e) => {
     taskManager.addHelper(rendererHelper);
     taskManager.addHelper(notificationHelper);
     taskManager.addHelper(urlHelper);
-    
-    try{
-    document.querySelector(".js--searchResult").addEventListener("click", function (e) {
-        e.preventDefault();
 
-        let anchor = null;
-        let i = 0;
+    try {
+        document.querySelector(".js--searchResult").addEventListener("click", function (e) {
+            e.preventDefault();
 
-        do {
-            anchor = (e.path[i].localName == 'a') ? e.path[i] : null;
-            i++;
-        } while (anchor == null && e.path[i].localName == 'main');
-        if(anchor == null) return;
-        anchor = anchor.href.split('/').pop();
+            let anchor = null;
+            let i = 0;
 
-        taskManager.generateRecipe({ value: anchor });
-    }, true);
+            do {
+                anchor = (e.path[i].localName == 'a') ? e.path[i] : null;
+                i++;
+            } while (anchor == null && e.path[i].localName == 'main');
+            if (anchor == null) return;
+            anchor = anchor.href.split('/').pop();
 
-    mealTypeForm.addEventToElements(".input-row", "click", function (e) {
-        let $inputRow = e.target;
-        let $input;
-        let $rowsContainer = null;
-        let data = null;
+            taskManager.generateRecipe({ value: anchor });
+        }, true);
 
-        while (!($inputRow.classList.contains("input-row"))) {
-            $inputRow = $inputRow.parentElement;
-        }
+        mealTypeForm.addEventToElements(".input-row", "click", function (e) {
+            let $inputRow = e.target;
+            let $input;
+            let $rowsContainer = null;
+            let data = null;
 
-        $input = $inputRow.querySelector("input[type=\"radio\"]");
+            while (!($inputRow.classList.contains("input-row"))) {
+                $inputRow = $inputRow.parentElement;
+            }
 
-        if ($input.checked) {
-            if (($rowsContainer = $inputRow.parentElement.querySelector(".order-1")))
-                $rowsContainer.classList.remove("order-1");
-            $inputRow.classList.add("order-1");
+            $input = $inputRow.querySelector("input[type=\"radio\"]");
 
-            data = {
-                value: $input.value,
-                searchingType: $input.name,
-                Form: mealTypeForm,
-                sForm: mealSearchingForm,
-            };
-            taskManager.setLayoutByValue(data);
-        }
-    });
+            if ($input.checked) {
+                if (($rowsContainer = $inputRow.parentElement.querySelector(".order-1")))
+                    $rowsContainer.classList.remove("order-1");
+                $inputRow.classList.add("order-1");
 
-    mealSearchingForm.onSubmitEvent((e) => {
-        e.preventDefault();
-        let $input = e.target.querySelector(".js--searchMeal");
-
-        taskManager.onFormSubmit({
-            value: $input.value.toLowerCase(),
-            searchingType: $input.name
+                data = {
+                    value: $input.value,
+                    searchingType: $input.name,
+                    Form: mealTypeForm,
+                    sForm: mealSearchingForm,
+                };
+                taskManager.setLayoutByValue(data);
+            }
         });
-    });
-    mealTypeForm.setDefault("name");
-}catch(e){
-    notificationHelper.update(e);
-}
+
+        mealSearchingForm.onSubmitEvent((e) => {
+            e.preventDefault();
+            let $input = e.target.querySelector(".js--searchMeal");
+
+            taskManager.onFormSubmit({
+                value: $input.value.toLowerCase(),
+                searchingType: $input.name
+            });
+        });
+        mealTypeForm.setDefault("name");
+
+        window.addEventListener('popstate', (e) => {
+            console.log(e);
+            const state = e.state;
+            state.notPushHistory = true;
+            switch (state.target) {
+                case 'createRecipe': taskManager.generateRecipe(state); break;
+                case 'createFormLayout': taskManager.setLayoutByValue(state); break;
+                case 'generateSearchResult': taskManager.onFormSubmit(state); break;
+            }
+
+
+        }, false);
+
+    } catch (e) {
+        notificationHelper.update(e);
+    }
+
+
 })();

@@ -30,8 +30,10 @@ taskManager = (function () {
         if (arrOption.includes(data.value) && !JSONListCopy[data.value])
             getSelectedOption(data);
         else {
+            let target = "createFormLayout";
             data.json = JSONListCopy[data.value];
-            notifyHelper("createFormLayout", data);
+            data.target = target;
+            notifyHelper(target, data);
         }
     };
 
@@ -39,7 +41,9 @@ taskManager = (function () {
         let query = getQuery('idMeal');
 
         getData(query, data, function (data) {
-            notifyHelper("createRecipe", data);
+            let target = "createRecipe";
+            data.target = target;
+            notifyHelper(target, data);
         });
     };
 

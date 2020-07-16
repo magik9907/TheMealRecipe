@@ -1,11 +1,11 @@
 const urlHelper = (function () {
     const update = (task, data) => {
-
-        switch (task) {
-            case 'createRecipe': recipe(data); break;
-            case 'createFormLayout': form(data); break;
-            case 'generateSearchResult': search(data); break;
-        }
+        if (!data.hasOwnProperty("notPushHistory"))
+            switch (task) {
+                case 'createRecipe': recipe(data); break;
+                case 'createFormLayout': form(data); break;
+                case 'generateSearchResult': search(data); break;
+            }
 
     };
 
@@ -32,10 +32,14 @@ const urlHelper = (function () {
     }
 
     const setState = (type, data) => {
-        return {
+        let state = {
             type: type,
+            searchingType: data.searchingType,
+            target: data.target,
             value: data.value,
-        }
+        };
+        delete state.json;
+        return state;
     }
 
     const setUrl = (type, data) => {
@@ -57,7 +61,6 @@ const urlHelper = (function () {
                 }
                 return true;
             });
-            console.log(urlArrToType);
             return urlArrToType.reduce((prev, next) => {
                 return prev + next[0] + "=" + next[1] + "&";
             }, "");

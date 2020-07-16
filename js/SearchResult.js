@@ -1,7 +1,6 @@
 class SearchResult {
 
   constructor(data) {
-    notificationHelper.update(data);
     if (data) {
       if (data.value === "ingredients")
         generateIngredientsData(data);
@@ -24,7 +23,6 @@ class SearchResult {
     else
       this.options = null;
 
-    notificationHelper.update("searchresult", this.options)
   }
   generateIngredientsData(data) {
     const json = data.json;
@@ -58,7 +56,6 @@ class SearchResult {
   generateOptions(name) {
     let df;
     let optionsArr = this.options[this.getKey(name)];
-    console.log(optionsArr);
     const createRadio = (type, value, addClass, addTextDesc) => {
       return `<div class="input-row flex btn btn-normal display-none js--searchMealOption ${addClass}">
             <label for="${type + value}">${(value) ? value : addTextDesc}</label>
