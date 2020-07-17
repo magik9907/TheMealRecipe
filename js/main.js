@@ -77,7 +77,7 @@ const openerArrow = (e) => {
                 searchingType: $input.name
             });
         });
-        mealTypeForm.setDefault("name");
+
 
         window.addEventListener('popstate', (e) => {
             console.log(e);
@@ -92,9 +92,39 @@ const openerArrow = (e) => {
 
         }, false);
 
+        const loc = location.search;
+        if (/f=|r=|s=/.test(loc)) {
+            let search = loc.replace("?", "");
+            let arr = search.split("&");
+            let isForm = false;
+            arr.map(x => {
+                let opt = x.split("=")
+                switch (opt[0]) {
+                    case 'f':
+                        isForm = true;
+                        taskManager.setLayoutByValue({
+                            value: opt[1],
+                            searchingType: "searchByRadio",
+                            notPushHistory: true,
+                            Form: mealTypeForm,
+                            sForm: mealSearchingForm,
+                        });
+                        break;
+                    case 'r':
+                        taskManager.generateRecipe({
+                            notPushHistory: true,
+                            value: opt[1]
+                        });
+                        break;
+                }
+            });
+            if (isForm) mealTypeForm.setDefault("name");
+        } else {
+            mealTypeForm.setDefault("name");
+        }
+
     } catch (e) {
         notificationHelper.update(e);
     }
-
 
 })();
