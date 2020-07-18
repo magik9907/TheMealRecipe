@@ -71,7 +71,6 @@ const openerArrow = (e) => {
         mealSearchingForm.onSubmitEvent((e) => {
             e.preventDefault();
             let $input = e.target.querySelector(".js--searchMeal");
-
             taskManager.onFormSubmit({
                 value: $input.value.toLowerCase(),
                 searchingType: $input.name
@@ -92,36 +91,83 @@ const openerArrow = (e) => {
 
         }, false);
 
+        const setView = function (arr) {
+
+            const search = (x) => {
+                if (isForm === true) {
+                    mealSearchingForm.querySelector("input[type=\"text\"]").value = x;
+                    mealSearchingForm.querySelector("button").click();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            const form = (x) => {
+                let $selector = mealTypeForm.querySelector(".order-1");
+                if ($selector)
+                    $selector.classList.remove("order-1");
+                $selector = mealTypeForm.querySelector(`[value="${x}"]`);
+                if ($selector) {
+                    while (!($selector.classList.contains("input-row"))) {
+                        $selector = $selector.parentElement;
+                    }
+                    $selector.classList.add("order-1");
+                }
+                taskManager.setLayoutByValue({
+                    value: x,
+                    searchingType: "searchByRadio",
+                    notPushHistory: true,
+                    Form: mealTypeForm,
+                    sForm: mealSearchingForm,
+                });
+                isForm = true;
+                return true;
+            }
+
+            const recipe = (x) => {
+                taskManager.generateRecipe({
+                    notPushHistory: true,
+                    value: x
+                });
+                return true;
+            }
+
+            const callback = x => {
+                let opt = x.split("=")
+                switch (opt[0]) {
+                    case "s":
+                        if (/f=/.test(loc))
+                            return !(search(opt[1]));
+                        return false;
+                        break;
+                    case 'f':
+                        return !(form(opt[1]));
+                        break;
+                    case 'r':
+                        return !(recipe(opt[1]));
+                        break;
+                }
+            }
+
+            while (arr.length != 0) {
+                arr = arr.filter(callback);
+            }
+
+            if (!isForm) mealTypeForm.setDefault("name");
+        }
+
         const loc = location.search;
         if (/f=|r=|s=/.test(loc)) {
             let search = loc.replace("?", "");
             let arr = search.split("&");
-            let isForm = false;
-            arr.map(x => {
-                let opt = x.split("=")
-                switch (opt[0]) {
-                    case 'f':
-                        isForm = true;
-                        taskManager.setLayoutByValue({
-                            value: opt[1],
-                            searchingType: "searchByRadio",
-                            notPushHistory: true,
-                            Form: mealTypeForm,
-                            sForm: mealSearchingForm,
-                        });
-                        break;
-                    case 'r':
-                        taskManager.generateRecipe({
-                            notPushHistory: true,
-                            value: opt[1]
-                        });
-                        break;
-                }
-            });
-            if (isForm) mealTypeForm.setDefault("name");
+            var isForm = false;
+            setView(arr);
         } else {
             mealTypeForm.setDefault("name");
         }
+
+
 
     } catch (e) {
         notificationHelper.update(e);

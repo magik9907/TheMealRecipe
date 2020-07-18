@@ -4,7 +4,7 @@ const urlHelper = (function () {
             switch (task) {
                 case 'createRecipe': recipe(data); break;
                 case 'createFormLayout': form(data); break;
-                //  case 'generateSearchResult': search(data); break;
+                case 'generateSearchResult': search(data); break;
             }
 
     };

@@ -88,7 +88,7 @@ taskManager = (function () {
             idMeal: 'lookup.php?i=',
             mealName: 'search.php?s=',
             flMealsName: 'search.php?f=',
-            categorieMealsName: 'filter.php?c=',
+            categoryMealsName: 'filter.php?c=',
             areaMealsName: 'filter.php?a=',
             ingredientMealsName: 'filter.php?i='
         };
@@ -96,10 +96,10 @@ taskManager = (function () {
         return queryList[key];
     }
 
-    const getData = function (query, mainData, callback) {
+    const getData = async function (query, mainData, callback) {
         if (!sendrequest) return;
         var key = '1';
-        fetch('https://www.themealdb.com/api/json/v1/' + key + '/' + query + mainData['value'])
+        await fetch('https://www.themealdb.com/api/json/v1/' + key + '/' + query + mainData['value'])
             .then((response) => response.json())
             .then((data) => {
                 JSONListCopy[mainData.value] = data;

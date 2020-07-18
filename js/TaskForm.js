@@ -30,6 +30,11 @@ TaskForm.prototype.onSubmitEvent = function (func) {
     this.$form.addEventListener("submit", func);
 }
 
+TaskForm.prototype.querySelector = function (selector) {
+    return this.$form.querySelector(selector);
+}
+
+
 //=========================================================
 
 var TypeTaskForm = function (selector) {
