@@ -95,7 +95,7 @@ SearchTaskForm.prototype.queryOption = function (value) {
             searchAndAction(element)(
                 (elem) => { this.removeClassName(elem, "display-none"); }
             );
-        } else {         
+        } else {
             searchAndAction(element)(
                 (elem) => { this.addClassName(elem, "display-none"); }
             );

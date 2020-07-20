@@ -7,18 +7,17 @@ const openerArrow = (e) => {
     selectBar.classList.toggle("open");
 }
 
+let mealTypeForm;
+let mealSearchingForm;
+try {
+    mealTypeForm = new TypeTaskForm(".js--mealTypeForm");
+    mealSearchingForm = new SearchTaskForm(".js--mealSearchingForm");
+} catch (error) {
+    notificationHelper.update("error", error)
+}
 
 (function () {
     "use strict";
-    let mealTypeForm;
-    let mealSearchingForm;
-
-    try {
-        mealTypeForm = new TypeTaskForm(".js--mealTypeForm");
-        mealSearchingForm = new SearchTaskForm(".js--mealSearchingForm");
-    } catch (error) {
-        notificationHelper.update("error", error)
-    }
 
     taskManager.addHelper(rendererHelper);
     taskManager.addHelper(notificationHelper);
@@ -32,9 +31,9 @@ const openerArrow = (e) => {
             let i = 0;
 
             do {
-                anchor = (e.path[i].localName == 'a') ? e.path[i] : null;
+                anchor = (e.path[i].localName === 'a') ? e.path[i] : null;
                 i++;
-            } while (anchor == null && e.path[i].localName == 'main');
+            } while (anchor == null && (e.path[i].localName != 'main' || e.path[i].localName != 'a'));
             if (anchor == null) return;
             anchor = anchor.href.split('/').pop();
 
@@ -79,98 +78,103 @@ const openerArrow = (e) => {
 
 
         window.addEventListener('popstate', (e) => {
-            console.log(e);
+            e.preventDefault();
             const state = e.state;
+            if (state == null) return;
             state.notPushHistory = true;
+            console.log("POP", state);
+
             switch (state.target) {
-                case 'createRecipe': taskManager.generateRecipe(state); break;
-                case 'createFormLayout': taskManager.setLayoutByValue(state); break;
-                case 'generateSearchResult': taskManager.onFormSubmit(state); break;
+                case 'createRecipe':
+                    taskManager.generateRecipe(state);
+                    break;
+                case 'createFormLayout':
+                    state.Form = mealTypeForm;
+                    state.sForm = mealSearchingForm;
+                    taskManager.setLayoutByValue(state);
+                    break;
+                case 'generateSearchResult':
+                    let $input = mealSearchingForm.querySelector("input[type=\"text\"]");
+                    $input.value = state.value;
+                    taskManager.onFormSubmit(state);
+                    break;
             }
-
-
         }, false);
+    } catch (e) {
+        notificationHelper.update(e);
+    }
+})();
 
-        const setView = function (arr) {
+const onLoadAction = (function () {
 
-            const search = (x) => {
-                if (isForm === true) {
-                    mealSearchingForm.querySelector("input[type=\"text\"]").value = x;
-                    mealSearchingForm.querySelector("button").click();
-                    return true;
-                } else {
-                    return false;
-                }
+    const search = (x) => {
+        let $input = mealSearchingForm.querySelector("input[type=\"text\"]");
+        $input.value = x;
+        mealSearchingForm.querySelector("button").click();
+    }
+
+    const form = (x) => {
+        let $selector = mealTypeForm.querySelector(".order-1");
+        if ($selector)
+            $selector.classList.remove("order-1");
+        $selector = mealTypeForm.querySelector(`[value="${x}"]`);
+        if ($selector) {
+            while (!($selector.classList.contains("input-row"))) {
+                $selector = $selector.parentElement;
             }
-
-            const form = (x) => {
-                let $selector = mealTypeForm.querySelector(".order-1");
-                if ($selector)
-                    $selector.classList.remove("order-1");
-                $selector = mealTypeForm.querySelector(`[value="${x}"]`);
-                if ($selector) {
-                    while (!($selector.classList.contains("input-row"))) {
-                        $selector = $selector.parentElement;
-                    }
-                    $selector.classList.add("order-1");
-                }
-                taskManager.setLayoutByValue({
-                    value: x,
-                    searchingType: "searchByRadio",
-                    notPushHistory: true,
-                    Form: mealTypeForm,
-                    sForm: mealSearchingForm,
-                });
-                isForm = true;
-                return true;
-            }
-
-            const recipe = (x) => {
-                taskManager.generateRecipe({
-                    notPushHistory: true,
-                    value: x
-                });
-                return true;
-            }
-
-            const callback = x => {
-                let opt = x.split("=")
-                switch (opt[0]) {
-                    case "s":
-                        if (/f=/.test(loc))
-                            return !(search(opt[1]));
-                        return false;
-                        break;
-                    case 'f':
-                        return !(form(opt[1]));
-                        break;
-                    case 'r':
-                        return !(recipe(opt[1]));
-                        break;
-                }
-            }
-
-            while (arr.length != 0) {
-                arr = arr.filter(callback);
-            }
-
-            if (!isForm) mealTypeForm.setDefault("name");
+            $selector.classList.add("order-1");
         }
+        taskManager.setLayoutByValue({
+            value: x,
+            searchingType: "searchByRadio",
+            notPushHistory: true,
+            Form: mealTypeForm,
+            sForm: mealSearchingForm,
+        });
+        isForm = true;
+    }
 
-        const loc = location.search;
-        if (/f=|r=|s=/.test(loc)) {
-            let search = loc.replace("?", "");
-            let arr = search.split("&");
-            var isForm = false;
-            setView(arr);
+    const recipe = (x) => {
+        taskManager.generateRecipe({
+            notPushHistory: true,
+            value: x
+        });
+    }
+
+    const load = () => {
+        const searchLoc = location.search.replace("?", "");
+        const arr = searchLoc.split("&");
+        let opt;
+        const f = /f=/;
+        const r = /r=/;
+        const s = /s=/;
+        var isForm = false;
+
+        if (f.test(searchLoc)) {
+            opt = arr.filter(x => f.test(x));
+            form(opt[0].split("=")[1]);
+            isForm = true;
         } else {
             mealTypeForm.setDefault("name");
         }
 
+        if (r.test(searchLoc)) {
+            opt = arr.filter(x => r.test(x));
+            recipe(opt[0].split("=")[1]);
+        }
 
+        if (s.test(searchLoc) && isForm) {
+            setTimeout(() => {
+                opt = arr.filter(x => s.test(x));
+                search(opt[0].split("=")[1]);
+            }, 1000);
+        }
+    }
 
-    } catch (e) {
-        notificationHelper.update(e);
+    return {
+        load: load
     }
 
 })();
+
+onLoadAction.load();

@@ -28,6 +28,8 @@ const urlHelper = (function () {
     };
 
     const pushState = (state, url) => {
+        console.log("PUSH",state);
+        
         history.pushState(state, document.title, (url) ? "?" + url : "");
     }
 
@@ -38,7 +40,6 @@ const urlHelper = (function () {
             target: data.target,
             value: data.value,
         };
-        delete state.json;
         return state;
     }
 

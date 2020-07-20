@@ -27,10 +27,12 @@ taskManager = (function () {
         if (!data)
             notifyHelper("error", { value: "Bad data to generate searching form" });
 
-        if (arrOption.includes(data.value) && !JSONListCopy[data.value])
+        let target = "createFormLayout";
+        if (arrOption.includes(data.value) && !JSONListCopy[data.value]) {
+            data.target = target;
             getSelectedOption(data);
+        }
         else {
-            let target = "createFormLayout";
             data.json = JSONListCopy[data.value];
             data.target = target;
             notifyHelper(target, data);
@@ -69,10 +71,10 @@ taskManager = (function () {
     const onFormSubmit = function (data) {
         // value - how search ex by name
         //searchingType = value to search
-        data.target = 'generateSearchResult';
         try {
             if (!data)
                 throw "Bad data to generate searching form";
+            data.target = 'generateSearchResult';
             let query = getQuery(data.searchingType);
             getData(query, data, function (data) {
                 notifyHelper(data.target, data);
@@ -98,17 +100,21 @@ taskManager = (function () {
 
     const getData = async function (query, mainData, callback) {
         if (!sendrequest) return;
+        let timeout;
         var key = '1';
-        await fetch('https://www.themealdb.com/api/json/v1/' + key + '/' + query + mainData['value'])
-            .then((response) => response.json())
-            .then((data) => {
-                JSONListCopy[mainData.value] = data;
-                mainData.json = data;
-                callback(mainData);
-            })
-            .catch((error) => {
-                notifyHelper("error", { value: error });
-            });
+        try {
+            const response = await fetch('https://www.themealdb.com/api/json/v1/' + key + '/' + query + mainData['value']);
+            timeout = setTimeout(() => { return }, 60 * 1000);
+            const json = await response.json();
+
+            mainData.json = json;
+            JSONListCopy[mainData.value] = json;
+            await callback(mainData);
+            clearTimeout(timeout);
+        }
+        catch (error) {
+            notifyHelper("error", { value: error });
+        };
     }
 
     return Object.freeze({
