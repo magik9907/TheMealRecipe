@@ -6,6 +6,7 @@
     <meta name="description" content="search meal recipe to cook." />
     <meta name="keywords" content="meal,recipe," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
 
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
@@ -48,7 +49,8 @@
 
                             <div class="input-row flex order-2 btn">
                                 <label for="whatSearchRadioArea">Area</label><input type="radio" value="area"
-                                    id="whatSearchRadioArea" name="searchByRadio" class="js--whatSearchRadio" /></div>
+                                    id="whatSearchRadioArea" name="searchByRadio" class="js--whatSearchRadio" />
+                            </div>
                             <div class="input-row flex  order-2 btn">
                                 <label for="whatSearchRadioIngredients">Ingredients</label><input type="radio"
                                     id="whatSearchRadioIngredients" value="ingredients" name="searchByRadio"
@@ -87,10 +89,6 @@
                     <a href="" target="_blank" data-strSource>Source</a>
                     <a href="" target="_blank" data-strYoutube>Yutube</a>
                 </div>
-                <!-- TODO: Youtube video js script -->
-                <!-- <iframe width="560" height="315" src="" frameborder="0" 
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
-                    data-strYoutube=""></!-->
                 <ul data-ingredientsList>
                 </ul>
                 <p data-strInstructions class="desc class-wrapper"></p>
@@ -102,7 +100,7 @@
         </template>
     </main>
     <footer>
-        <p>&copy; 2020 by magik9907</p>
+        <p>&copy; 2020 by <a href="https://magik9907.github.io">magik9907</a></p>
     </footer>
     <script src="js/SearchResult.js" d></script>
     <script src="js/Recipe.js" d></script>
